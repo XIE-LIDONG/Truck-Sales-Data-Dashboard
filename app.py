@@ -27,20 +27,36 @@ COLOR_GRAY = '#f0f2f6'
 # Load data with caching to improve performance
 @st.cache_data
 def load_data():
+    import os
     try:
-        df = pd.read_excel("data.xlsx")
+        # 获取项目根目录的绝对路径（适配Streamlit Cloud）
+        file_path = os.path.join(os.path.dirname(__file__), "data.xlsx")
+        st.info(f"🔍 Trying to load file from: {file_path}")  # 调试：显示文件路径
+        
+        df = pd.read_excel(file_path)
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
         df['Total sales'] = pd.to_numeric(df['Total sales'], errors='coerce').fillna(0)
         df['Sales'] = pd.to_numeric(df['Sales'], errors='coerce').fillna(0)
         df['Customer Traffic'] = pd.to_numeric(df['Customer Traffic'], errors='coerce').fillna(0)
+        
+        st.success("✅ Data file loaded successfully!")
         return df
     except FileNotFoundError:
-        st.error("❌ Error: [data.xlsx] file not found in the same directory!")
+        st.error("❌ Error: [data.xlsx] file not found! Please check:")
+        st.error("1. File name is exactly 'data.xlsx' (case-sensitive!)")
+        st.error("2. File is in the root directory of your GitHub repo")
+        st.error("3. No extra folders (e.g., 'data/' subfolder)")
+        # 显示当前目录下的文件列表（调试用）
+        st.info("📂 Files in current directory:")
+        try:
+            for file in os.listdir(os.path.dirname(__file__)):
+                st.info(f"- {file}")
+        except:
+            st.info("Cannot list directory files")
         return pd.DataFrame()
     except Exception as e:
         st.error(f"❌ Data loading failed: {str(e)}")
         return pd.DataFrame()
-
 df = load_data()
 
 # Calculate core KPIs (sales figures)
