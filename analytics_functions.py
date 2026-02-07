@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-# ===================== Global Configuration =====================
+# Global Configuration 
 # Fix Chinese character/negative sign display issues
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial']
 plt.rcParams['axes.unicode_minus'] = False
@@ -19,7 +19,7 @@ COLOR_GRAY = '#f0f2f6'       # Light gray
 def format_currency(x, pos):
     return f'{x:,.0f}'
 
-# ===================== 1. Sales Performance by Salesperson =====================
+#  Sales Performance by Salesperson 
 def sales_person(df, type_input="total"):
     """
     Sales analysis visualization 
@@ -132,7 +132,7 @@ def sales_person(df, type_input="total"):
     else:
         print(f"Input error! Only 'total'/'week'/'daily' are supported. Current input: {type_input}")
 
-# ===================== 2. Sales Analysis by Truck Type =====================
+#  Sales Analysis by Truck Type 
 def truck_type(df, plot_type: str = "total", start_date=None, end_date=None):
     """
     Truck type sales analysis visualization
@@ -220,7 +220,7 @@ def truck_type(df, plot_type: str = "total", start_date=None, end_date=None):
 
     plt.tight_layout()
 
-# ===================== 3. Customer Traffic Analysis =====================
+# Customer Traffic Analysis 
 def customer_traffic_analysis(df, analysis_type="daily"):
     """
     Comprehensive customer traffic analysis
@@ -349,7 +349,7 @@ def customer_traffic_analysis(df, analysis_type="daily"):
     plt.xticks(rotation=45, ha='right', fontsize=10)
     plt.tight_layout()
 
-# ===================== 4. Conversion Rate Analysis =====================
+# Conversion Rate Analysis 
 def conversion_rate_analysis(df, analysis_type="daily"):
     """
     Combined conversion rate and average daily sales analysis
@@ -549,7 +549,7 @@ def conversion_rate_analysis(df, analysis_type="daily"):
     plt.xticks(rotation=45, ha='right', fontsize=10)
     plt.tight_layout()
 
-# ===================== 5. Sales Amount Analysis =====================
+# Sales Amount Analysis
 def sales_amount_analysis(df, analysis_type="daily"):
     """
     Sales amount trend and growth rate analysis
@@ -757,24 +757,8 @@ def sales_amount_analysis(df, analysis_type="daily"):
     plt.xticks(rotation=45, ha='right', fontsize=10)
     plt.tight_layout()
 
-# ===================== 6. Sales Quantity Analysis =====================
+# Sales Quantity Analysis 
 def sales_quantity_analysis(df, analysis_type="daily"):
-    """
-    Sales quantity trend and growth rate analysis
-    (Same logic as sales amount analysis but uses Sales column)
-    
-    analysis_type options:
-    - daily: Daily sales quantity trend
-    - weekly: Weekly sales quantity trend
-    - monthly: Monthly sales quantity trend
-    - week_growth: Weekly growth rate (color-coded bar chart)
-    - month_growth: Monthly growth rate (color-coded bar chart)
-    
-    Features:
-    - All values use thousand separators
-    - Week axis shows compact date range
-    - Growth charts use red for positive, orange for negative growth
-    """
     df_ana = df.copy()
     df_ana['Date'] = pd.to_datetime(df_ana['Date'])
     plt.figure(figsize=(10,6), dpi=90)
