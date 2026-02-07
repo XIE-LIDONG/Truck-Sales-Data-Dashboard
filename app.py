@@ -29,7 +29,6 @@ COLOR_GRAY = '#f0f2f6'
 def load_data():
     import os
     try:
-        # 获取项目根目录的绝对路径（适配Streamlit Cloud）
         file_path = os.path.join(os.path.dirname(__file__), "data.xlsx")
         st.info(f"🔍 Trying to load file from: {file_path}")  # 调试：显示文件路径
         
@@ -46,7 +45,6 @@ def load_data():
         st.error("1. File name is exactly 'data.xlsx' (case-sensitive!)")
         st.error("2. File is in the root directory of your GitHub repo")
         st.error("3. No extra folders (e.g., 'data/' subfolder)")
-        # 显示当前目录下的文件列表（调试用）
         st.info("📂 Files in current directory:")
         try:
             for file in os.listdir(os.path.dirname(__file__)):
@@ -82,7 +80,7 @@ def calculate_kpi(df):
 
 kpi_data = calculate_kpi(df)
 
-# ==================== Sidebar Navigation ====================
+#  Sidebar Navigation
 st.sidebar.title("📊 Data Analysis Navigation")
 
 # Dashboard button logic
@@ -147,7 +145,7 @@ current_page = st.query_params.get("page", "dashboard")
 selected_detail_analysis = st.query_params.get("analysis", analysis_module)
 selected_analysis_config = analysis_modules.get(selected_detail_analysis, list(analysis_modules.values())[0])
 
-# ==================== Main Dashboard Section ====================
+#  Main Dashboard Section
 if not df.empty:
     if current_page == "dashboard":
         # Initial dashboard trigger button
